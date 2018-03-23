@@ -8,6 +8,19 @@ public class Item {
 	
 	/**
 	 * 
+	 * @param id
+	 * @param title
+	 * @param availableQuantity
+	 * @param price
+	 */
+	public Item(int id, String title, int availableQuantity, double price) {
+		this.id = id;
+		this.title = title;
+		this.availableQuantity = availableQuantity;
+		this.price = price;
+	}
+	/**
+	 * 
 	 */
 	@Override
 	public String toString() {
