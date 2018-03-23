@@ -6,6 +6,10 @@ public class Item {
 	public int availableQuantity;
 	public double price;
 	
+	/**
+	 * 
+	 */
+	@Override
 	public String toString() {
 		return "";
 	}
