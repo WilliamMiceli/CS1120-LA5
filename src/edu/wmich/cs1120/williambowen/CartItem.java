@@ -16,6 +16,8 @@ public class CartItem {
 	/**
 	 * 
 	 * @param quantity
+	 * @throws Exception if the user tries to request more
+	 * than the quantity that is available in the store
 	 */
 	public void setQuantity(int quantity) {
 		

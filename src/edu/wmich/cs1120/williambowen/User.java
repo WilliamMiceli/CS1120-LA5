@@ -2,10 +2,21 @@ package edu.wmich.cs1120.williambowen;
 
 public class User {
 	public int id;
-	public String username;
+	public String userName;
 	public String password;
 	public CartItem[] cartItems;
 	
+	/**
+	 * 
+	 * @param id
+	 * @param userName
+	 * @param password
+	 */
+	public User(int id, String userName, String password) {
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+	}
 	/**
 	 * When the user adds an item to the cart list, the following are checked:
 	 * <ul>
@@ -19,6 +30,9 @@ public class User {
 	 * 
 	 * @param item
 	 * @param quantity
+	 * @throws an appropriate exception if the user tries to add more than
+	 * three items to the car list, and if there is a thrown exception from
+	 * the {@link edu.wmich.cs1120.williambowen.CartItem#setQuantity(int)} method.
 	 */
 	public void addItemToTheCart(Item item, int quantity) {
 		
