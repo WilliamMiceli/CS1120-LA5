@@ -46,10 +46,15 @@ public class Lookup {
 	 * This method adds new users to the user array
 	 */
 	public static User addUserToTheList(String userName, String password) {
-		return null;
+		User[] newUserList = new User[userList.length + 1];
+		for(int i = 0; i < userList.length; ++i) {
+			newUserList[i] = userList[i];
+		}
+		newUserList[userList.length] = new User(userList.length + 1, userName, password);
+		userList = newUserList;
+		return userList[userList.length - 1];
 	}
-	/**
-	 * This method adds two users to the user list.
+	/** This method adds two users to the user list.
 	 * The initial two users should not be changed, but more
 	 * can be added.
 	 * @return
@@ -62,8 +67,7 @@ public class Lookup {
 		
 		return list;
 	}
-	/**
-	 * This method loads data into the item list.
+	/** This method loads data into the item list.
 	 * This list has all of the items in the application.
 	 * The initial items should not be changed, but more
 	 * can be added.
@@ -85,8 +89,7 @@ public class Lookup {
 		
 		return itemList;
 	}
-	/**
-	 * This method searches for the item by its key and then
+	/** This method searches for the item by its key and then
 	 * returns the item object if it exists, else null.
 	 * @param key
 	 * @return
@@ -94,8 +97,7 @@ public class Lookup {
 	public static Item getItemById(int key) {
 		return null;
 	}
-	/**
-	 * This method checks if the password is valid.
+	/** This method checks if the password is valid.
 	 * Passwords should contain:
 	 * <ol>
 	 * <li>At least one special character
@@ -107,6 +109,50 @@ public class Lookup {
 	 * @return Message of "error" if the password is not valid, and null if the password is valid
 	 */
 	public static String isValidPassword(String password) {
-		return null;
+		boolean special = false;
+		boolean lower = false;
+		boolean upper = false;
+		boolean number = false;
+		
+		String specialCharList = "`~!@#$%^&*()-_=+|,.<>?;:[]{}";
+		String lowerCharList = "abcdefghijklmnopqrstuvwxyz";
+		String upperCharList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String numberCharList = "0123456789";
+		
+		if(password.length() < 6) {
+			System.out.println("The password length should be at least 6 characters.");
+			return "error";
+		}
+		
+		for(int i = 0; i < password.length(); ++i) {
+			if(specialCharList.contains(Character.toString(password.charAt(i)))) {
+				special = true;
+			}else if(lowerCharList.contains(Character.toString(password.charAt(i)))) {
+				lower = true;
+			}else if(upperCharList.contains(Character.toString(password.charAt(i)))) {
+				upper = true;
+			}else if(numberCharList.contains(Character.toString(password.charAt(i)))) {
+				number = true;
+			}
+		}
+		
+		if(special && lower && upper && number) {
+			return null;
+		}else {
+			System.out.println("Password should contain:");
+			if(!special) {
+				System.out.println("At least one special character.");
+			}
+			if(!lower) {
+				System.out.println("At least one lower-case character.");
+			}
+			if(!upper) {
+				System.out.println("At least one upper-case character.");
+			}
+			if(!number) {
+				System.out.println("At least one number.");
+			}
+			return "error";
+		}
 	}
 }
