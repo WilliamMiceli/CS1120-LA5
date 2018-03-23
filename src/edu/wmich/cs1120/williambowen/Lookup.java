@@ -1,8 +1,8 @@
 package edu.wmich.cs1120.williambowen;
 
 public class Lookup {
-	User[] userList = new User[];
-	Item[] storeItemList = new Item[];
+	public User[] userList = new User[];
+	public Item[] storeItemList = new Item[];
 	
 	public static User checkLoginAuth(String userName, String password) {
 		
