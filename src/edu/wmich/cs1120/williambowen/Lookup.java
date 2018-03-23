@@ -18,6 +18,8 @@ public class Lookup {
 	public static User checkLoginAuth(String userName, String password) {
 		userList = createUsers();
 		storeItemList = loadItems();
+		
+		return null;
 	}
 	/**
 	 * 
@@ -34,7 +36,7 @@ public class Lookup {
 	 * </ol>
 	 */
 	public static User checkSignUpAuth(String userName, String password1, String password2) {
-		
+		return null;
 	}
 	/**
 	 * 
@@ -44,7 +46,7 @@ public class Lookup {
 	 * This method adds new users to the user array
 	 */
 	public static User addUserToTheList(String userName, String password) {
-		
+		return null;
 	}
 	/**
 	 * This method adds two users to the user list.
@@ -90,7 +92,7 @@ public class Lookup {
 	 * @return
 	 */
 	public static Item getItemById(int key) {
-		
+		return null;
 	}
 	/**
 	 * This method checks if the password is valid.
@@ -105,6 +107,6 @@ public class Lookup {
 	 * @return Message of "error" if the password is not valid, and null if the password is valid
 	 */
 	public static String isValidPassword(String password) {
-		
+		return null;
 	}
 }
