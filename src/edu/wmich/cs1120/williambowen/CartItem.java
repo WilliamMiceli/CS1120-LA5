@@ -27,6 +27,6 @@ public class CartItem {
 	 */
 	@Override
 	public String toString() {
-		
+		return "";
 	}
 }
