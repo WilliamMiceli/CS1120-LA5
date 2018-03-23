@@ -69,6 +69,8 @@ public class FlowerShop {
 				passwordIsValid = false;
 			}
 		}while(passwordIsValid);
+		
+		System.out.println("Login Successfully!");
 	}
 	/**
 	 * Catch an appropriate type of exception
