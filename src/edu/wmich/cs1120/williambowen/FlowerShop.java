@@ -35,40 +35,18 @@ public class FlowerShop {
 		String password1;
 		String password2;
 		
-		boolean userNameUnique = true;
-		boolean passwordsMatch = true;
-		boolean passwordIsValid = true;
+		User testUser;
 		
 		do {
-			do {
-				System.out.println("Enter your UserName:");
-				userName = input.nextLine();
-				System.out.println("Enter your Password:");
-				password1 = input.nextLine();
-				System.out.println("Enter your Password again:");
-				password2 = input.nextLine();
-				
-				userNameUnique = true;
-				for(int i = 0; i < Lookup.userList.length; ++i) {
-					if(Lookup.userList[i].userName.equals(userName)) {
-						userNameUnique = false;
-						System.out.println("UserName already exists.");
-						break;
-					}
-				}
-				
-				passwordsMatch = true;
-				if(password1.compareTo(password2) != 0) {
-					passwordsMatch = false;
-					System.out.println("Passwords do not match.");
-				}
-			}while(userNameUnique && passwordsMatch);
+			System.out.println("Enter your UserName:");
+			userName = input.nextLine();
+			System.out.println("Enter your Password:");
+			password1 = input.nextLine();
+			System.out.println("Enter your Password again:");
+			password2 = input.nextLine();
 			
-			passwordIsValid = true;
-			if(Lookup.isValidPassword(password1).compareTo("error") == 0) {
-				passwordIsValid = false;
-			}
-		}while(passwordIsValid);
+			testUser = checkSignUp(userName, password1, password2);
+		}while(testUser == null);
 		
 		System.out.println("Login Successfully!");
 	}
@@ -80,6 +58,31 @@ public class FlowerShop {
 	 * @return
 	 */
 	public static User checkSignUp(String userName, String password1, String password2) {
+		
+		boolean userNameUnique = true;
+		boolean passwordsMatch = true;
+		boolean passwordIsValid = true;
+		
+		for(int i = 0; i < Lookup.userList.length; ++i) {
+			if(Lookup.userList[i].userName.equals(userName)) {
+				userNameUnique = false;
+				System.out.println("UserName already exists.");
+				break;
+			}
+		}
+		
+		if(password1.compareTo(password2) != 0) {
+			passwordsMatch = false;
+			System.out.println("Passwords do not match.");
+		}
+		
+		if(Lookup.isValidPassword(password1).compareTo("error") == 0) {
+			passwordIsValid = false;
+		}
+		
+		if(userNameUnique && passwordsMatch && passwordIsValid) {
+			return Lookup.addUserToTheList(userName, password1);
+		}
 		return null;
 	}
 	/**
