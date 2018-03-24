@@ -16,12 +16,16 @@ public class FileManager {
 	 */
 	public static void createBillFile(double total, User sUser) {
 		filename = sUser.userName + ".txt";
-		FileWriter output;
+		PrintWriter output = null;
 		try {
-			output = new FileWriter(filename);
-			output.write(String.valueOf(total));
-		} catch (IOException e) {
+			output = new PrintWriter(filename);
+			output.println(String.format("%8.2f", total));;
+		} catch (IOException e1) {
 			System.out.println("Unable to create bill.");
+		} catch (Exception e) {
+			System.out.println("Unable to create bill.");
+		} finally {
+			output.close();
 		}
 	}
 	/**
@@ -42,11 +46,17 @@ public class FileManager {
 		
 		try {
 			input = new Scanner(file);
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e2) {
 			System.out.println("You don't have any bill currently.");
-		} catch (Exception e) {
+		} catch (Exception e1) {
 			System.out.println("Unable to read bill.");
 		}
-		System.out.println("Your bill balance is " + String.format("$%.2f",input.nextDouble()));
+		try {
+			System.out.println("Your bill balance is " + String.format("$%.2f",input.nextDouble()));
+		} catch (Exception e) {
+			System.out.println("Unable to read bill.");
+		} finally {
+			input.close();
+		}
 	}
 }
