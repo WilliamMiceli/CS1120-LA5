@@ -87,9 +87,11 @@ public class FlowerShop {
 			switch(input.nextInt()) {
 			case 1: // SignUp
 				signUp(input, sUser, store);
+				storeMenu(input, sUser, store);
 				break;
 			case 2: // Login
 				login(input, sUser, store);
+				storeMenu(input, sUser, store);
 				break;
 			case 3: // Exit
 				loopMenu = false;

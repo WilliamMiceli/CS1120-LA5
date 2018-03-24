@@ -59,7 +59,7 @@ public class Lookup {
 			System.out.println("Passwords do not match.");
 			return null;
 		}
-		if(isValidPassword(password1).compareTo("error") == 0) {
+		if(isValidPassword(password1) != null) {
 			return null;
 		}
 		return addUserToTheList(userName, password1);
@@ -146,7 +146,7 @@ public class Lookup {
 		boolean upper = false;
 		boolean number = false;
 		
-		String specialCharList = "`~!@#$%^&*()-_=+|,.<>?;:[]{}";
+		String specialCharList = "`~!@%#$^&*()-_=+|,.<>?;:[]{}";
 		String lowerCharList = "abcdefghijklmnopqrstuvwxyz";
 		String upperCharList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		String numberCharList = "0123456789";
