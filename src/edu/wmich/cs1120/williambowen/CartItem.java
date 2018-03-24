@@ -28,6 +28,6 @@ public class CartItem {
 	 */
 	@Override
 	public String toString() {
-		return "";
+		return this.item.title + "(Quantity: " + quantity + "), Price: " + String.format("$%4.2f",this.item.price);
 	}
 }

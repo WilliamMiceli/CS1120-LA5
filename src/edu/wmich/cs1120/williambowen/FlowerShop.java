@@ -20,6 +20,7 @@ public class FlowerShop {
 		System.out.println("Welcome to our Flowers Shop!");
 		
 		mainMenu(input, sUser, store);
+		input.close();
 	}
 	/**
 	 * Catch an appropriate type of exception
@@ -86,8 +87,10 @@ public class FlowerShop {
 			switch(input.nextInt()) {
 			case 1: // SignUp
 				signUp(input, sUser, store);
+				break;
 			case 2: // Login
 				login(input, sUser, store);
+				break;
 			case 3: // Exit
 				loopMenu = false;
 				break;
@@ -107,8 +110,21 @@ public class FlowerShop {
 	/**
 	 * 
 	 */
-	public static void myCart() {
-		
+	public static void myCart(Scanner input, User sUser) {
+		double total = 0.00;
+		if(sUser.cartItems == null) {
+			System.out.println("Your Shopping Cart is empty.");
+		}else {
+			for(int i = 0; i < sUser.cartItems.length; ++i) {
+				total += sUser.cartItems[i].item.price;
+				System.out.println(sUser.cartItems[i]);
+			}
+			System.out.println("\nTotal Price: " + String.format("$%.2f",total));
+			System.out.println("\nDo you want to purchase these items(Y,N)");
+			if(input.nextLine().charAt(0) == 'Y') {
+				FileManager.createBillFile(total);
+			}
+		}
 	}
 	/**
 	 * 
@@ -125,9 +141,10 @@ public class FlowerShop {
 			switch(input.nextInt()) {
 			case 1: // Flowers List
 				printFlowersList(store);
+				flowerMenu(input, sUser, store);
 				break;
 			case 2: // My Cart
-				myCart();
+				myCart(input, sUser);
 				break;
 			case 3: // Bill
 				FileManager.readBill();
@@ -143,6 +160,12 @@ public class FlowerShop {
 		
 		
 	}
+	/**
+	 * 
+	 * @param input
+	 * @param sUser
+	 * @param store
+	 */
 	public static void flowerMenu(Scanner input, User sUser, Lookup store) {
 		
 		int id = -1;
