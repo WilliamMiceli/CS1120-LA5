@@ -49,31 +49,20 @@ public class Lookup {
 	 */
 	public User checkSignUpAuth(String userName, String password1, String password2) {
 		
-		boolean userNameUnique = true;
-		boolean passwordsMatch = true;
-		boolean passwordIsValid = true;
-		
 		for(int i = 0; i < userList.length; ++i) {
 			if(userList[i].userName.equals(userName)) {
-				userNameUnique = false;
 				System.out.println("UserName already exists.");
-				break;
+				return null;
 			}
 		}
-		
 		if(password1.compareTo(password2) != 0) {
-			passwordsMatch = false;
 			System.out.println("Passwords do not match.");
+			return null;
 		}
-		
 		if(isValidPassword(password1).compareTo("error") == 0) {
-			passwordIsValid = false;
+			return null;
 		}
-		
-		if(userNameUnique && passwordsMatch && passwordIsValid) {
-			return addUserToTheList(userName, password1);
-		}
-		return null;
+		return addUserToTheList(userName, password1);
 	}
 	/**
 	 * 

@@ -49,11 +49,11 @@ public class FlowerShop {
 		
 		do {
 			System.out.println("Enter your UserName:");
-			userName = input.nextLine();
+			userName = input.next();
 			System.out.println("Enter your Password:");
-			password1 = input.nextLine();
+			password1 = input.next();
 			System.out.println("Enter your Password again:");
-			password2 = input.nextLine();
+			password2 = input.next();
 			
 			sUser = checkSignUp(userName, password1, password2, store, sUser);
 		}while(sUser == null);
