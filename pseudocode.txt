@@ -1,0 +1,405 @@
+class FlowerShop {
+void main(String[] args) {
+User sUser = null;
+Lookup store = new Lookup();
+Scanner input = new Scanner(System.in);
+Print: "Welcome to our Flowers Shop!"
+
+mainMenu(input, sUser, store);
+input.close();
+}
+User login(Scanner input, User sUser, Lookup store) {
+String userName;
+String password;
+
+do {
+Print: "Enter your UserName:"
+userName = input.next();
+Print: "Enter your Password:"
+password = input.next();
+
+sUser = store.checkLoginAuth(userName, password);
+}while(sUser == null);
+return sUser;
+}
+User signUp(Scanner input, User sUser, Lookup store) {
+
+String userName;
+String password1;
+String password2;
+
+do {
+Print: "Enter your UserName:"
+userName = input.next();
+Print: "Enter your Password:"
+password1 = input.next();
+Print: "Enter your Password again:"
+password2 = input.next();
+
+sUser = checkSignUp(userName, password1, password2, store, sUser);
+}while(sUser == null);
+Print: "Login Successfully!\n"
+return sUser;
+}
+User checkSignUp(String userName, String password1, String password2, Lookup store, User sUser) {
+
+sUser = store.checkSignUpAuth(userName, password1, password2);
+
+return sUser;
+}
+void mainMenu(Scanner input, User sUser, Lookup store) {
+boolean loopMenu = true;
+do {
+Print: 
+Print: "1- SignUp"
+Print: "2- Login"
+Print: "3- Exit"
+Print: "Select one of these options:"
+
+switch(input.nextInt()) {
+case 1: // SignUp
+sUser = signUp(input, sUser, store);
+storeMenu(input, sUser, store);
+break;
+case 2: // Login
+sUser = login(input, sUser, store);
+storeMenu(input, sUser, store);
+break;
+case 3: // Exit
+loopMenu = false;
+break;
+default:
+Print: "Invalid choice. Integers from 1 - 3 only."
+}
+}while(loopMenu);
+}
+void printFlowersList(Lookup store) {
+for(int i = 0; i < store.storeItemList.length; ++i) {
+Print: store.storeItemList[i]
+}
+}
+void myCart(Scanner input, User sUser) {
+double total = 0.00;
+if(sUser.cartItems == null) {
+Print: "Your Shopping Cart is empty."
+}else {
+for(int i = 0; i < sUser.cartItems.length; ++i) {
+total += sUser.cartItems[i].item.price * sUser.cartItems[i].quantity;
+Print: sUser.cartItems[i]
+}
+Print: "\nTotal Price: " + String.format("$%.2f",total)
+Print: "\nDo you want to purchase these items(Y,N)"
+if(input.next().charAt(0) == 'Y') {
+FileManager.createBillFile(total, sUser);
+}
+}
+}
+void storeMenu(Scanner input, User sUser, Lookup store) {
+
+boolean loopMenu = true;
+do {
+Print: 
+Print: "1- Flowers List!"
+Print: "2- My Cart"
+Print: "3- Bill"
+Print: "4- Exit"
+
+switch(input.nextInt()) {
+case 1: // Flowers List
+printFlowersList(store);
+flowerMenu(input, sUser, store);
+break;
+case 2: // My Cart
+myCart(input, sUser);
+break;
+case 3: // Bill
+FileManager.readBill(sUser);
+break;
+case 4: // Exit
+loopMenu = false;
+break;
+default:
+Print: "Invalid choice. Integers from 1-4 only."
+}
+}while(loopMenu);
+}
+void flowerMenu(Scanner input, User sUser, Lookup store) {
+
+int id = -1;
+Item flower = null;
+int quantity = 0;
+
+boolean loopMenu = true;
+do {
+Print: "\nDo you want to purchase an item(Y,N)?"
+
+if(input.next().charAt(0) == ('Y')){
+Print: "Enter flower id:"
+id = input.nextInt();
+flower = store.getItemById(id);
+
+if(flower != null) {
+Print: "Enter the quantity:"
+quantity = input.nextInt();
+
+if(quantity > flower.availableQuantity) {
+Print: "This quantity is not available."
+Print: "The available quantity in the store is " + flower.availableQuantity + " flowers, " +
+"and your ordered quantity is " + quantity + " flowers."
+quantity = 0;
+}else {
+sUser.addItemToTheCart(id, flower, quantity);
+}
+}
+}else {
+loopMenu = false;
+}
+}while(loopMenu);
+}
+}
+========================================================================================================================================================================================================
+========================================================================================================================================================================================================
+class Lookup {
+User[] userList;
+Item[] storeItemList;
+
+Lookup() {
+userList = createUsers();
+storeItemList = loadItems();
+}
+User checkLoginAuth(String userName, String password) {
+for(int i = 0; i < userList.length; ++i) {
+if(userList[i].userName.compareToIgnoreCase(userName) == 0) {
+if(userList[i].password.compareTo(password) == 0) {
+return userList[i];
+}else {
+Print: "Password is incorrect."
+return null;
+}
+}
+}
+Print: "Username does not exist."
+return null;
+}
+User checkSignUpAuth(String userName, String password1, String password2) {
+
+for(int i = 0; i < userList.length; ++i) {
+if(userList[i].userName.equals(userName)) {
+Print: "UserName already exists."
+return null;
+}
+}
+if(password1.compareTo(password2) != 0) {
+Print: "Passwords do not match."
+return null;
+}
+if(isValidPassword(password1) != null) {
+return null;
+}
+return addUserToTheList(userName, password1);
+}
+User addUserToTheList(String userName, String password) {
+User[] newUserList = new User[userList.length + 1];
+for(int i = 0; i < userList.length; ++i) {
+newUserList[i] = userList[i];
+}
+newUserList[userList.length] = new User(userList.length + 1, userName, password);
+userList = newUserList;
+return userList[userList.length - 1];
+}
+User[] createUsers() {
+User[] list = new User[2];
+
+list[0] = new User(1, "sara", "123");
+list[1] = new User(2, "adam", "321");
+
+return list;
+}
+Item[] loadItems() {
+Item[] itemList = new Item[10];
+
+itemList[0] = new Item(1, "Tulip", 10, 3.00);
+itemList[1] = new Item(2, "Calla", 15, 3.00);
+itemList[2] = new Item(3, "Gerbera", 15, 2.00);
+itemList[3] = new Item(4, "Rose", 30, 2.00);
+itemList[4] = new Item(5, "Purple Mallow", 12, 2.00);
+itemList[5] = new Item(6, "Bergenia", 8, 1.80);
+itemList[6] = new Item(7, "Baneberry", 20, 1.95);
+itemList[7] = new Item(8, "Aster", 25, 1.50);
+itemList[8] = new Item(9, "Sunflower", 8, 1.00);
+itemList[9] = new Item(10, "Gladiolus", 10, 0.75);
+
+return itemList;
+}
+Item getItemById(int key) {
+for(int i = 0; i < storeItemList.length; ++i) {
+if(storeItemList[i].id == key) {
+return storeItemList[i];
+}
+}
+Print: "This flower's id is not existing!"
+return null;
+}
+String isValidPassword(String password) {
+boolean special = false;
+boolean lower = false;
+boolean upper = false;
+boolean number = false;
+
+String specialCharList = "`~!@%#$^&*()-_=+|,.<>?;:[]{}";
+String lowerCharList = "abcdefghijklmnopqrstuvwxyz";
+String upperCharList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+String numberCharList = "0123456789";
+
+if(password.length() < 6) {
+Print: "The password length should be at least 6 characters."
+return "error";
+}
+
+for(int i = 0; i < password.length(); ++i) {
+if(specialCharList.contains(Character.toString(password.charAt(i)))) {
+special = true;
+}else if(lowerCharList.contains(Character.toString(password.charAt(i)))) {
+lower = true;
+}else if(upperCharList.contains(Character.toString(password.charAt(i)))) {
+upper = true;
+}else if(numberCharList.contains(Character.toString(password.charAt(i)))) {
+number = true;
+}
+}
+
+if(special && lower && upper && number) {
+return null;
+}else {
+Print: "Password should contain:"
+if(!special) {
+Print: "At least one special character."
+}
+if(!lower) {
+Print: "At least one lower-case character."
+}
+if(!upper) {
+Print: "At least one upper-case character."
+}
+if(!number) {
+Print: "At least one number."
+}
+return "error";
+}
+}
+}
+========================================================================================================================================================================================================
+========================================================================================================================================================================================================
+class User {
+int id;
+String userName;
+String password;
+CartItem[] cartItems = null;
+
+User(int id, String userName, String password) {
+this.id = id;
+this.userName = userName;
+this.password = password;
+}
+void addItemToTheCart(int id, Item item, int quantity) {
+CartItem[] newCartItems;
+
+if(this.cartItems == null) {
+newCartItems = new CartItem[1];
+newCartItems[0] = new CartItem(id, item);
+newCartItems[0].setQuantity(quantity);
+cartItems = newCartItems;
+}else if(cartItems.length > 2){
+Print: "Unable to add item, you already have three unique items."
+}else {
+newCartItems = new CartItem[cartItems.length + 1];
+for(int i = 0; i < cartItems.length; ++i) {
+newCartItems[i] = cartItems[i];
+}
+newCartItems[cartItems.length] = new CartItem(id, item);
+newCartItems[cartItems.length].setQuantity(quantity);
+cartItems = newCartItems;
+}
+}
+}
+========================================================================================================================================================================================================
+========================================================================================================================================================================================================
+class FileManager {
+String filename; // filename should be set as the userName.
+
+
+void createBillFile(double total, User sUser) {
+filename = sUser.userName + ".txt";
+PrintWriter output = null;
+try {
+output = new PrintWriter(filename);
+output.println(String.format("%8.2f", total));;
+} catch (IOException e1) {
+Print: "Unable to create bill."
+} catch (Exception e) {
+Print: "Unable to create bill."
+} finally {
+output.close();
+}
+}
+void readBill(User sUser) {
+filename = sUser.userName + ".txt";
+File file = new File(filename);
+Scanner input = null;
+
+try {
+input = new Scanner(file);
+} catch (FileNotFoundException e2) {
+Print: "You don't have any bill currently."
+} catch (Exception e1) {
+Print: "Unable to read bill."
+}
+try {
+Print: "Your bill balance is " + String.format("$%.2f",input.nextDouble())
+} catch (Exception e) {
+Print: "Unable to read bill."
+} finally {
+input.close();
+}
+}
+}
+========================================================================================================================================================================================================
+========================================================================================================================================================================================================
+class CartItem {
+int id;
+int quantity;
+Item item;
+
+
+CartItem(int id, Item item) {
+this.id = id;
+this.item = item;
+}
+void setQuantity(int quantity) {
+this.quantity = quantity;
+}
+@Override
+String toString() {
+return this.item.title + "(Quantity: " + quantity + "), Price: " + String.format("$%4.2f",this.item.price);
+}
+}
+========================================================================================================================================================================================================
+========================================================================================================================================================================================================
+class Item {
+int id;
+String title;
+int availableQuantity;
+double price;
+
+
+Item(int id, String title, int availableQuantity, double price) {
+this.id = id;
+this.title = title;
+this.availableQuantity = availableQuantity;
+this.price = price;
+}
+@Override
+String toString() {
+return id + " -  " + title + ",  Price:" + String.format("$%4.2f",price);
+}
+}
