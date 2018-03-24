@@ -1,9 +1,13 @@
 package edu.wmich.cs1120.williambowen;
 
 public class Lookup {
-	public static User[] userList;
-	public static Item[] storeItemList;
+	public User[] userList;
+	public Item[] storeItemList;
 	
+	public Lookup() {
+		userList = createUsers();
+		storeItemList = loadItems();
+	}
 	/**
 	 * 
 	 * @param userName
@@ -15,10 +19,18 @@ public class Lookup {
 	 * <li>If the user enters the wrong password, throw the message "Wrong password."
 	 * </ol>
 	 */
-	public static User checkLoginAuth(String userName, String password) {
-		userList = createUsers();
-		storeItemList = loadItems();
-		
+	public User checkLoginAuth(String userName, String password) {
+		for(int i = 0; i < userList.length; ++i) {
+			if(userList[i].userName.compareToIgnoreCase(userName) == 0) {
+				if(userList[i].password.compareTo(password) == 0) {
+					return userList[i];
+				}else {
+					System.out.println("Password is incorrect.");
+					return null;
+				}
+			}
+		}
+		System.out.println("Username does not exist.");
 		return null;
 	}
 	/**
@@ -35,7 +47,32 @@ public class Lookup {
 	 * <li>If the password is not valid for requirements in the {@link #isValidPassword(String)} method
 	 * </ol>
 	 */
-	public static User checkSignUpAuth(String userName, String password1, String password2) {
+	public User checkSignUpAuth(String userName, String password1, String password2) {
+		
+		boolean userNameUnique = true;
+		boolean passwordsMatch = true;
+		boolean passwordIsValid = true;
+		
+		for(int i = 0; i < userList.length; ++i) {
+			if(userList[i].userName.equals(userName)) {
+				userNameUnique = false;
+				System.out.println("UserName already exists.");
+				break;
+			}
+		}
+		
+		if(password1.compareTo(password2) != 0) {
+			passwordsMatch = false;
+			System.out.println("Passwords do not match.");
+		}
+		
+		if(isValidPassword(password1).compareTo("error") == 0) {
+			passwordIsValid = false;
+		}
+		
+		if(userNameUnique && passwordsMatch && passwordIsValid) {
+			return addUserToTheList(userName, password1);
+		}
 		return null;
 	}
 	/**
@@ -45,7 +82,7 @@ public class Lookup {
 	 * @return
 	 * This method adds new users to the user array
 	 */
-	public static User addUserToTheList(String userName, String password) {
+	public User addUserToTheList(String userName, String password) {
 		User[] newUserList = new User[userList.length + 1];
 		for(int i = 0; i < userList.length; ++i) {
 			newUserList[i] = userList[i];
@@ -59,7 +96,7 @@ public class Lookup {
 	 * can be added.
 	 * @return
 	 */
-	public static User[] createUsers() {
+	public User[] createUsers() {
 		User[] list = new User[2];
 		
 		list[0] = new User(1, "sara", "123");
@@ -73,7 +110,7 @@ public class Lookup {
 	 * can be added.
 	 * @return
 	 */
-	public static Item[] loadItems() {
+	public Item[] loadItems() {
 		Item[] itemList = new Item[10];
 		
 		itemList[0] = new Item(1, "Tulip", 10, 3.00);
@@ -94,7 +131,7 @@ public class Lookup {
 	 * @param key
 	 * @return
 	 */
-	public static Item getItemById(int key) {
+	public Item getItemById(int key) {
 		return null;
 	}
 	/** This method checks if the password is valid.
@@ -108,7 +145,7 @@ public class Lookup {
 	 * @param password
 	 * @return Message of "error" if the password is not valid, and null if the password is valid
 	 */
-	public static String isValidPassword(String password) {
+	public String isValidPassword(String password) {
 		boolean special = false;
 		boolean lower = false;
 		boolean upper = false;
