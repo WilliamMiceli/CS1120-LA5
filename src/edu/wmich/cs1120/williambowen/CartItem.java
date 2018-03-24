@@ -11,7 +11,8 @@ public class CartItem {
 	 * @param item
 	 */
 	public CartItem(int id, Item item) {
-		
+		this.id = id;
+		this.item = item;
 	}
 	/**
 	 * 
@@ -20,7 +21,7 @@ public class CartItem {
 	 * than the quantity that is available in the store
 	 */
 	public void setQuantity(int quantity) {
-		
+		this.quantity = quantity;
 	}
 	/**
 	 * 

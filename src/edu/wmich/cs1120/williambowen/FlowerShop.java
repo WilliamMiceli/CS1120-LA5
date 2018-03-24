@@ -143,4 +143,37 @@ public class FlowerShop {
 		
 		
 	}
+	public static void flowerMenu(Scanner input, User sUser, Lookup store) {
+		
+		int id = -1;
+		Item flower = null;
+		int quantity = 0;
+		
+		boolean loopMenu = true;
+		do {
+			System.out.println("Do you want to purchase an item(Y,N)?");
+			
+			if(input.nextLine().charAt(0) == ('Y')){
+				System.out.println("Enter flower id:");
+				id = input.nextInt();
+				flower = store.getItemById(id);
+				
+				if(flower != null) {
+					System.out.println("Enter the quantity:");
+					quantity = input.nextInt();
+					
+					if(quantity > flower.availableQuantity) {
+						System.out.println("This quantity is not available.");
+						System.out.println("The available quantity in the store is " + flower.availableQuantity + " flowers, " +
+								"and your ordered quantity is " + quantity + " flowers.");
+						quantity = 0;
+					}else {
+						sUser.addItemToTheCart(id, flower, quantity);
+					}
+				}
+			}else {
+				loopMenu = false;
+			}
+		}while(loopMenu);
+	}
 }

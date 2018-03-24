@@ -132,6 +132,12 @@ public class Lookup {
 	 * @return
 	 */
 	public Item getItemById(int key) {
+		for(int i = 0; i < storeItemList.length; ++i) {
+			if(storeItemList[i].id == key) {
+				return storeItemList[i];
+			}
+		}
+		System.out.println("This flower's id is not existing!");
 		return null;
 	}
 	/** This method checks if the password is valid.

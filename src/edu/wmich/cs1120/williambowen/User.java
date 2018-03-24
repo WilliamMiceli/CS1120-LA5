@@ -4,7 +4,7 @@ public class User {
 	public int id;
 	public String userName;
 	public String password;
-	public CartItem[] cartItems;
+	public CartItem[] cartItems = null;
 	
 	/**
 	 * 
@@ -34,7 +34,20 @@ public class User {
 	 * three items to the car list, and if there is a thrown exception from
 	 * the {@link edu.wmich.cs1120.williambowen.CartItem#setQuantity(int)} method.
 	 */
-	public void addItemToTheCart(Item item, int quantity) {
+	public void addItemToTheCart(int id, Item item, int quantity) {
+		CartItem[] newCartItems;
 		
+		if(this.cartItems == null) {
+			newCartItems = new CartItem[1];
+			newCartItems[0] = new CartItem(id, item);
+		}else if(cartItems.length > 2){
+			System.out.println("EXCESS ITEMS CATCH THIS!!!!!!!!!!!!!!!!!!!!!!");
+		}else {
+			newCartItems = new CartItem[cartItems.length + 1];
+			for(int i = 0; i < cartItems.length; ++i) {
+				newCartItems[i] = cartItems[i];
+			}
+			newCartItems[cartItems.length] = new CartItem(id, item);
+		}
 	}
 }
