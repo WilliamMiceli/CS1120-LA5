@@ -78,14 +78,14 @@ public class FlowerShop {
 	 * 
 	 */
 	public static void mainMenu(Scanner input, User sUser, Lookup store) {
-		System.out.println("");
-		System.out.println("1- SignUp");
-		System.out.println("2- Login");
-		System.out.println("3- Exit");
-		System.out.println("Select one of these options:");
-		
 		boolean loopMenu = true;
 		do {
+			System.out.println("");
+			System.out.println("1- SignUp");
+			System.out.println("2- Login");
+			System.out.println("3- Exit");
+			System.out.println("Select one of these options:");
+			
 			switch(input.nextInt()) {
 			case 1: // SignUp
 				sUser = signUp(input, sUser, store);
@@ -120,13 +120,13 @@ public class FlowerShop {
 			System.out.println("Your Shopping Cart is empty.");
 		}else {
 			for(int i = 0; i < sUser.cartItems.length; ++i) {
-				total += sUser.cartItems[i].item.price;
+				total += sUser.cartItems[i].item.price * sUser.cartItems[i].quantity;
 				System.out.println(sUser.cartItems[i]);
 			}
 			System.out.println("\nTotal Price: " + String.format("$%.2f",total));
 			System.out.println("\nDo you want to purchase these items(Y,N)");
 			if(input.next().charAt(0) == 'Y') {
-				FileManager.createBillFile(total);
+				FileManager.createBillFile(total, sUser);
 			}
 		}
 	}
@@ -152,7 +152,7 @@ public class FlowerShop {
 				myCart(input, sUser);
 				break;
 			case 3: // Bill
-				FileManager.readBill();
+				FileManager.readBill(sUser);
 				break;
 			case 4: // Exit
 				loopMenu = false;
@@ -161,9 +161,6 @@ public class FlowerShop {
 				System.out.println("Invalid choice. Integers from 1-4 only.");
 			}
 		}while(loopMenu);
-		
-		
-		
 	}
 	/**
 	 * 
@@ -179,7 +176,7 @@ public class FlowerShop {
 		
 		boolean loopMenu = true;
 		do {
-			System.out.println("Do you want to purchase an item(Y,N)?");
+			System.out.println("\nDo you want to purchase an item(Y,N)?");
 			
 			if(input.next().charAt(0) == ('Y')){
 				System.out.println("Enter flower id:");

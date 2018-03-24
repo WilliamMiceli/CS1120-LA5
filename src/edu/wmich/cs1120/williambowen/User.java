@@ -40,6 +40,8 @@ public class User {
 		if(this.cartItems == null) {
 			newCartItems = new CartItem[1];
 			newCartItems[0] = new CartItem(id, item);
+			newCartItems[0].setQuantity(quantity);
+			cartItems = newCartItems;
 		}else if(cartItems.length > 2){
 			System.out.println("EXCESS ITEMS CATCH THIS!!!!!!!!!!!!!!!!!!!!!!");
 		}else {
@@ -48,6 +50,8 @@ public class User {
 				newCartItems[i] = cartItems[i];
 			}
 			newCartItems[cartItems.length] = new CartItem(id, item);
+			newCartItems[cartItems.length].setQuantity(quantity);
+			cartItems = newCartItems;
 		}
 	}
 }
