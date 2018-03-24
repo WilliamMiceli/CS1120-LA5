@@ -25,23 +25,24 @@ public class FlowerShop {
 	/**
 	 * Catch an appropriate type of exception
 	 */
-	public static void login(Scanner input, User sUser, Lookup store) {
+	public static User login(Scanner input, User sUser, Lookup store) {
 		String userName;
 		String password;
 		
 		do {
 			System.out.println("Enter your UserName:");
-			userName = input.nextLine();
+			userName = input.next();
 			System.out.println("Enter your Password:");
-			password = input.nextLine();
+			password = input.next();
 			
 			sUser = store.checkLoginAuth(userName, password);
 		}while(sUser == null);
+		return sUser;
 	}
 	/**
 	 * 
 	 */
-	public static void signUp(Scanner input, User sUser, Lookup store) {
+	public static User signUp(Scanner input, User sUser, Lookup store) {
 		
 		String userName;
 		String password1;
@@ -57,8 +58,8 @@ public class FlowerShop {
 			
 			sUser = checkSignUp(userName, password1, password2, store, sUser);
 		}while(sUser == null);
-		
-		System.out.println("Login Successfully!");
+		System.out.println("Login Successfully!\n");
+		return sUser;
 	}
 	/**
 	 * Catch an appropriate type of exception
@@ -77,6 +78,7 @@ public class FlowerShop {
 	 * 
 	 */
 	public static void mainMenu(Scanner input, User sUser, Lookup store) {
+		System.out.println("");
 		System.out.println("1- SignUp");
 		System.out.println("2- Login");
 		System.out.println("3- Exit");
@@ -86,11 +88,11 @@ public class FlowerShop {
 		do {
 			switch(input.nextInt()) {
 			case 1: // SignUp
-				signUp(input, sUser, store);
+				sUser = signUp(input, sUser, store);
 				storeMenu(input, sUser, store);
 				break;
 			case 2: // Login
-				login(input, sUser, store);
+				sUser = login(input, sUser, store);
 				storeMenu(input, sUser, store);
 				break;
 			case 3: // Exit
@@ -123,7 +125,7 @@ public class FlowerShop {
 			}
 			System.out.println("\nTotal Price: " + String.format("$%.2f",total));
 			System.out.println("\nDo you want to purchase these items(Y,N)");
-			if(input.nextLine().charAt(0) == 'Y') {
+			if(input.next().charAt(0) == 'Y') {
 				FileManager.createBillFile(total);
 			}
 		}
@@ -135,9 +137,10 @@ public class FlowerShop {
 		
 		boolean loopMenu = true;
 		do {
+			System.out.println("");
 			System.out.println("1- Flowers List!");
 			System.out.println("2- My Cart");
-			System.out.println("3 - Bill");
+			System.out.println("3- Bill");
 			System.out.println("4- Exit");
 			
 			switch(input.nextInt()) {
@@ -178,7 +181,7 @@ public class FlowerShop {
 		do {
 			System.out.println("Do you want to purchase an item(Y,N)?");
 			
-			if(input.nextLine().charAt(0) == ('Y')){
+			if(input.next().charAt(0) == ('Y')){
 				System.out.println("Enter flower id:");
 				id = input.nextInt();
 				flower = store.getItemById(id);
