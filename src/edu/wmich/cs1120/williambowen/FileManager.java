@@ -13,6 +13,7 @@ public class FileManager {
 	 * Will catch an appropriate type of exception if there is a problem
 	 * while creating or writing to the file.
 	 * @param total The total price of the order
+	 * @param sUser The logged in user.
 	 */
 	public static void createBillFile(double total, User sUser) {
 		filename = sUser.userName + ".txt";
@@ -38,6 +39,7 @@ public class FileManager {
 	 * <li>If the user does not have a bill yet
 	 * <li>If the problem happened while reading the file
 	 * </ol>
+	 * @param sUser the logged in user.
 	 */
 	public static void readBill(User sUser) {
 		filename = sUser.userName + ".txt";

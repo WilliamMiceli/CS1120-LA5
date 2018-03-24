@@ -11,7 +11,7 @@ public class FlowerShop {
 	 * <li>Use a custom Exception (InvalidInputException) when the input is not
 	 * one of the options on the menu.
 	 * </ol>
-	 * @param args
+	 * @param args Nothing needed
 	 */
 	public static void main(String[] args) {
 		User sUser = null;
@@ -24,6 +24,10 @@ public class FlowerShop {
 	}
 	/**
 	 * Catch an appropriate type of exception
+	 * @param input To get user input.
+	 * @param sUser The user to be logged in.
+	 * @param store The store itself.
+	 * @return User the user that has been successfully logged in.
 	 */
 	public static User login(Scanner input, User sUser, Lookup store) {
 		String userName;
@@ -40,7 +44,11 @@ public class FlowerShop {
 		return sUser;
 	}
 	/**
-	 * 
+	 * Signs users up to shop in the store.
+	 * @param input For getting user input.
+	 * @param sUser The logged in user.
+	 * @param store The store itself.
+	 * @return User The user successfully created.
 	 */
 	public static User signUp(Scanner input, User sUser, Lookup store) {
 		
@@ -63,10 +71,12 @@ public class FlowerShop {
 	}
 	/**
 	 * Catch an appropriate type of exception
-	 * @param userName
-	 * @param password1
-	 * @param password2
-	 * @return
+	 * @param userName The username to be checked.
+	 * @param password1 The password to be checked.
+	 * @param password2 The password again to be checked.
+	 * @param store The store itself.
+	 * @param sUser The logged in user.
+	 * @return User The user successfully created.
 	 */
 	public static User checkSignUp(String userName, String password1, String password2, Lookup store, User sUser) {
 		
@@ -75,7 +85,10 @@ public class FlowerShop {
 		return sUser;
 	}
 	/**
-	 * 
+	 * The main menu.
+	 * @param input For reading input.
+	 * @param sUser The logged in user.
+	 * @param store The store.
 	 */
 	public static void mainMenu(Scanner input, User sUser, Lookup store) {
 		boolean loopMenu = true;
@@ -104,7 +117,8 @@ public class FlowerShop {
 		}while(loopMenu);
 	}
 	/**
-	 * 
+	 * The list of flowers available.
+	 * @param store The store itself.
 	 */
 	public static void printFlowersList(Lookup store) {
 		for(int i = 0; i < store.storeItemList.length; ++i) {
@@ -112,7 +126,9 @@ public class FlowerShop {
 		}
 	}
 	/**
-	 * 
+	 * The cart menu.
+	 * @param input To read user input.
+	 * @param sUser The currently logged in user.
 	 */
 	public static void myCart(Scanner input, User sUser) {
 		double total = 0.00;
@@ -131,7 +147,10 @@ public class FlowerShop {
 		}
 	}
 	/**
-	 * 
+	 * The store menu for making choices.
+	 * @param input To get user input.
+	 * @param sUser The currently logged in user.
+	 * @param store The store itself.
 	 */
 	public static void storeMenu(Scanner input, User sUser, Lookup store) {
 		
@@ -163,10 +182,10 @@ public class FlowerShop {
 		}while(loopMenu);
 	}
 	/**
-	 * 
-	 * @param input
-	 * @param sUser
-	 * @param store
+	 * The menu for buying flowers.
+	 * @param input To get user input.
+	 * @param sUser The user that's currently logged in.
+	 * @param store The store itself.
 	 */
 	public static void flowerMenu(Scanner input, User sUser, Lookup store) {
 		

@@ -6,17 +6,17 @@ public class CartItem {
 	public Item item;
 	
 	/**
-	 * 
-	 * @param id
-	 * @param item
+	 * The item that is in the user's shopping cart.
+	 * @param id The ID of the item.
+	 * @param item The item object.
 	 */
 	public CartItem(int id, Item item) {
 		this.id = id;
 		this.item = item;
 	}
 	/**
-	 * 
-	 * @param quantity
+	 * Sets the quantity of the item in the shopping cart.
+	 * @param quantity The amount of the item in the shopping cart.
 	 * @throws Exception if the user tries to request more
 	 * than the quantity that is available in the store
 	 */
@@ -24,7 +24,7 @@ public class CartItem {
 		this.quantity = quantity;
 	}
 	/**
-	 * 
+	 * The nicely formatted string of the item in the user's shopping cart.
 	 */
 	@Override
 	public String toString() {

@@ -9,15 +9,14 @@ public class Lookup {
 		storeItemList = loadItems();
 	}
 	/**
-	 * 
-	 * @param userName
-	 * @param password
-	 * @return Return the user object if it exists
 	 * An appropriate exception will be thrown for the following scenarios:
 	 * <ol>
 	 * <li>If userName doesn't exist, throw the message "Username doesn't exist."
 	 * <li>If the user enters the wrong password, throw the message "Wrong password."
 	 * </ol>
+	 * @param userName The username to be checked to log in.
+	 * @param password The password of the user to be checked for log in.
+	 * @return Return the user object if it exists
 	 */
 	public User checkLoginAuth(String userName, String password) {
 		for(int i = 0; i < userList.length; ++i) {
@@ -34,11 +33,6 @@ public class Lookup {
 		return null;
 	}
 	/**
-	 * 
-	 * @param userName
-	 * @param password1
-	 * @param password2
-	 * @return
 	 * An appropriate exception will be thrown for the following scenarios:
 	 * <ol>
 	 * <li>A user is trying to signup using a userName that already exists.
@@ -46,6 +40,10 @@ public class Lookup {
 	 * <li>If the password length is less than 6 characters.
 	 * <li>If the password is not valid for requirements in the {@link #isValidPassword(String)} method
 	 * </ol>
+	 * @param userName The username of the user trying to make an account with.
+	 * @param password1 Password entry 1
+	 * @param password2 Password entry 2
+	 * @return User The user that is currently now logged in.
 	 */
 	public User checkSignUpAuth(String userName, String password1, String password2) {
 		
@@ -65,10 +63,10 @@ public class Lookup {
 		return addUserToTheList(userName, password1);
 	}
 	/**
-	 * 
-	 * @param userName
-	 * @param password
-	 * @return
+	 * Adds users to the user list.
+	 * @param userName The username of the user to be added.
+	 * @param password The password of the user to be added.
+	 * @return User The user that has been successfully added to the list.
 	 * This method adds new users to the user array
 	 */
 	public User addUserToTheList(String userName, String password) {
@@ -83,7 +81,7 @@ public class Lookup {
 	/** This method adds two users to the user list.
 	 * The initial two users should not be changed, but more
 	 * can be added.
-	 * @return
+	 * @return User[] The list of users that have just been created.
 	 */
 	public User[] createUsers() {
 		User[] list = new User[2];
@@ -97,7 +95,7 @@ public class Lookup {
 	 * This list has all of the items in the application.
 	 * The initial items should not be changed, but more
 	 * can be added.
-	 * @return
+	 * @return Item[] The items that are available to purchase.
 	 */
 	public Item[] loadItems() {
 		Item[] itemList = new Item[10];
@@ -117,8 +115,8 @@ public class Lookup {
 	}
 	/** This method searches for the item by its key and then
 	 * returns the item object if it exists, else null.
-	 * @param key
-	 * @return
+	 * @param key The requested ID of the item.
+	 * @return Item The item that has been found from the key;
 	 */
 	public Item getItemById(int key) {
 		for(int i = 0; i < storeItemList.length; ++i) {
@@ -137,8 +135,9 @@ public class Lookup {
 	 * <li>At least one lower-case letter
 	 * <li>At least one upper-case letter
 	 * <li>At least one number
-	 * @param password
-	 * @return Message of "error" if the password is not valid, and null if the password is valid
+	 * </ol>
+	 * @param password The password to check against set requirements.
+	 * @return Message of "error" if the password is not valid, and null if the password is valid.
 	 */
 	public String isValidPassword(String password) {
 		boolean special = false;

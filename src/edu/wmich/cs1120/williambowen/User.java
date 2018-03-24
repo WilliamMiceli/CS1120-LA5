@@ -7,10 +7,11 @@ public class User {
 	public CartItem[] cartItems = null;
 	
 	/**
+	 * The constructor.
 	 * 
-	 * @param id
-	 * @param userName
-	 * @param password
+	 * @param id The ID of the user.
+	 * @param userName The username of the user.
+	 * @param password The password of the user.
 	 */
 	public User(int id, String userName, String password) {
 		this.id = id;
@@ -27,9 +28,9 @@ public class User {
 	 * <br>The same item is not listed multiple times in the cart list.
 	 * <li>If the cart has less than three unique items, as that is the maximum.
 	 * </ul>
-	 * 
-	 * @param item
-	 * @param quantity
+	 * @param id The ID of the item to be added to the cart.
+	 * @param item The item to be added to the cart.
+	 * @param quantity The quantity of the item to be added to the cart.
 	 * @throws an appropriate exception if the user tries to add more than
 	 * three items to the car list, and if there is a thrown exception from
 	 * the {@link edu.wmich.cs1120.williambowen.CartItem#setQuantity(int)} method.
@@ -43,7 +44,7 @@ public class User {
 			newCartItems[0].setQuantity(quantity);
 			cartItems = newCartItems;
 		}else if(cartItems.length > 2){
-			System.out.println("EXCESS ITEMS CATCH THIS!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println("Unable to add item, you already have three unique items.");
 		}else {
 			newCartItems = new CartItem[cartItems.length + 1];
 			for(int i = 0; i < cartItems.length; ++i) {
